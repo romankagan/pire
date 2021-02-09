@@ -39,7 +39,7 @@ long long GetUsec()
 	struct timeval tm;
 	gettimeofday(&tm, 0);
 	long long usec = tm.tv_sec * 1000000 + tm.tv_usec;
-	return usec;	
+	return usec;
 }
 
 #else // _WIN32
@@ -61,14 +61,14 @@ long long GetUsec()
 class Timer {
 public:
 	Timer(const std::string& msg, size_t sz): m_msg(msg), m_sz(sz) { m_tv = GetUsec(); }
-    
+
 	~Timer()
 	{
 		long long usec = GetUsec() - m_tv;
 		float bw = m_sz / (1.024 * 1.024 * usec);
 		std::cout << m_msg << ": " << usec << " us\t" << bw << " MB/sec" <<  std::endl;
 	}
-    
+
 private:
 	std::string m_msg;
 	long long m_tv;
@@ -243,7 +243,7 @@ public:
 		if (alg == DefaultRun)
 			PrintResult<Scanner>::Do(sc, Pire::Runner(sc).Begin().Run(begin, end).End().State());
 		else {
-			const char* pos = (alg == ShortestPrefix ? 
+			const char* pos = (alg == ShortestPrefix ?
 				Pire::ShortestPrefix(sc, begin, end) :
 				Pire::LongestPrefix(sc, begin, end));
 			if (pos)
@@ -347,8 +347,6 @@ ITester* CreateTester(const std::vector<std::string>& types)
 		return new PairTester<Pire::SimpleScanner, Pire::NonrelocScanner>;
 	else if (types.size() == 2 && types[0] == "nonreloc" && types[1] == "multi")
 		return new PairTester<Pire::NonrelocScanner, Pire::Scanner>;
-	else if (types.size() == 2 && types[0] == "nonreloc" && types[1] == "simple")
-		return new PairTester<Pire::NonrelocScanner, Pire::SimpleScanner>;
 	else if (types.size() == 2 && types[0] == "nonreloc" && types[1] == "nonreloc")
 		return new PairTester<Pire::NonrelocScanner, Pire::NonrelocScanner>;
 	else if (types.size() == 2 && types[0] == "nonrelocnomask" && types[1] == "nonrelocnomask")
@@ -367,7 +365,6 @@ ITester* CreateTester(const std::vector<std::string>& types)
 	else
 		throw usage;
 }
-
 
 void Main(int argc, char** argv)
 {
@@ -411,7 +408,7 @@ void Main(int argc, char** argv)
 		alg = ITester::ShortestPrefix;
 	else if (algName == "longestprefix")
 		alg = ITester::LongestPrefix;
-	else 
+	else
 		throw usage;
 
 	std::unique_ptr<ITester> tester(CreateTester(types));
